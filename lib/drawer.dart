@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'form/form.dart';
+
+BuildContext cont;
 
 ListView lv = new ListView(
   padding: EdgeInsets.zero,
   //TODO: Change Icons
-  children: const <Widget>[
+  children: <Widget>[
     DrawerHeader(
       decoration: BoxDecoration(
         color: Colors.blue,
@@ -23,6 +26,12 @@ ListView lv = new ListView(
     ListTile(
       leading: Icon(Icons.account_circle),
       title: Text('Bericht erstellen'),
+      onTap: () {
+        Navigator.push(
+          cont,
+          MaterialPageRoute(builder: (context) => Report_Questionnaire()),
+        );
+      },
     ),
     ListTile(
       leading: Icon(Icons.settings),
@@ -38,6 +47,7 @@ ListView lv = new ListView(
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    cont = context;
     return Drawer(child: lv);
   }
 }
