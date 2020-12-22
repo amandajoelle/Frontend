@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -90,42 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          //TODO: Change Icons
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'CIRS App',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Fälle bearbeiten'),
-            ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Bericht erstellen'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Vorfälle ansehen'),
-            ),
-            ListTile(
-              leading: Icon(Icons.info_rounded),
-              title: Text('Über'),
-            ),
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
