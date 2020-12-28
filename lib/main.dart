@@ -1,3 +1,5 @@
+import 'package:cirs/services/employee-service.dart';
+import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -77,6 +79,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // just for testing purposes
+  // TODO: remove function after testing
+  void loginUser() async {
+    EmployeeService employeeService = EmployeeService('http://10.0.2.2:8080');
+    await employeeService.login('Mueller@cirs.de', '123456789');
+    TokenStorage tokenStorage = TokenStorage();
+    print('Token was stored: '+ tokenStorage.getToken());
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -123,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: loginUser, //_incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
