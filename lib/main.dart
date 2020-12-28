@@ -1,4 +1,5 @@
 import 'package:cirs/services/employee-service.dart';
+import 'package:cirs/services/questionnaire-service.dart';
 import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -88,6 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
     print('Token was stored: '+ tokenStorage.getToken());
   }
 
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getQuestionnaireTest() async {
+    QuestionnaireService questionnaireService = QuestionnaireService('http://10.0.2.2:8080');
+    await questionnaireService.getQuestionnaire('089e25c8-f012-4cc7-bfdb-bb944ff611c3');
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -134,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: loginUser, //_incrementCounter,
+        onPressed: getQuestionnaireTest, //_incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
