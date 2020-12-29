@@ -17,12 +17,25 @@ class QuestionnaireService extends BaseService {
           headers: {'Accept':'application/json'});
       Map data = jsonDecode(response.body);
       questionnaire = Questionnaire.fromJson(data);
-      print('Questionnaire fetched: $questionnaire');
     } catch(error) {
       print('Caught error: $error');
       return null;
     }
     return questionnaire;
+  }
+
+  Future<bool> postQuestionnaire(Questionnaire questionnaire) async {
+    try {
+      Response response = await post(
+          getRootUrl() + questionnairePath,
+          headers: {'Accept':'application/json', 'Content-Type':'application/json'},
+          body: jsonEncode(questionnaire));
+      print(response.statusCode);
+    } catch(error) {
+      print('Caught error: $error');
+      return false;
+    }
+    return true;
   }
 }
 
@@ -44,7 +57,6 @@ class Questionnaire {
     this.reporter, this.factors});
 
   factory Questionnaire.fromJson(Map<String, dynamic> json) {
-    List<dynamic> dList = json['Factors'];
     return Questionnaire(
       questionnaireId: json['question_id'],
       expertise: json['expertise'],
@@ -56,7 +68,33 @@ class Questionnaire {
       reasons: json['reasons'],
       frequency: json['frequency'],
       reporter: json['reporter'],
-      factors: json['Factors']
+      factors: Factor.convertDynamicToFactor(json['Factors'])
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return{
+      'expertise': expertise,
+      'ageGroup': ageGroup,
+      'sex': sex,
+      'location': location,
+      'event': event,
+      'result': result,
+      'reasons': reasons,
+      'frequency': frequency,
+      'reporter': reporter,
+      'factors': factors
+    };
+  }
+
+  @override
+  String toString() {
+    String questionnaireString = 'Id: $questionnaireId, expertise: $expertise, ageGroup: $ageGroup,' +
+        ' sex: $sex, location: $location, event: $event, result: $result, reasons: $reasons,' +
+        ' frequency: $frequency, reporter: $reporter, Factors: ';
+    for (final elem in factors) {
+      questionnaireString += elem.toString();
+    }
+    return questionnaireString;
   }
 }
