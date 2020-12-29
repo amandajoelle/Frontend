@@ -1,4 +1,6 @@
 import 'package:cirs/services/employee-service.dart';
+import 'package:cirs/services/factor-service.dart';
+import 'package:cirs/services/questionnaire-service.dart';
 import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -88,6 +90,29 @@ class _MyHomePageState extends State<MyHomePage> {
     print('Token was stored: '+ tokenStorage.getToken());
   }
 
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getQuestionnaireTest() async {
+    QuestionnaireService questionnaireService = QuestionnaireService('http://10.0.2.2:8080');
+    await questionnaireService.getQuestionnaire('089e25c8-f012-4cc7-bfdb-bb944ff611c3');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void postQuestionnaireTest() async {
+    Questionnaire questionnaire = Questionnaire(expertise: 'Innere Medizin', ageGroup: '51-60', sex: 'männlich', location: 'Krankenhaus',
+        event: 'Pat. hat die Tabletten des Nachbarpatienten eingenommen, diese wirken gegen hohen Blutdruck, Cholesterinsenker, und Pulssenker, ärztliche Person informiert, regelmäßige Kontrolle von Blutdruck und Puls.',
+        result: 'Meldung an ärztliche Person der Station, Überwachung der Vitalparameter. Kein Schaden.',
+        reasons: 'Verminderte Aufmerksamkeit über Gesamtsituation im Zimmer.\nAufnahme und Analyse im Projekt "AMTS Stellen und Verabreichen". Die Analyse zeigt, dass es hier eine Verwechselung durch den Patienten gegeben hat. Eine Beschriftung war auf dem "Tablettenpöttchen" vorhanden. Beide Patienten wurden auf Zimmerebene mobilisiert und sollten gemeinsam am Tisch essen. Dabei ist es zur versehentlichen Einnahme der Tabletten gekommen.\nEmpfehlung: Vor Ort bei der Einnahme der Tabletten dabei bleiben. Insbesondere wenn der medizinisch-pflegerische Zustand des Patienten darauf hindeuten, dass der Grad der Selbstständigkeit diesbezüglich eingeschränkt ist. Vor der Verabreichung sollte eine Einzelkontrolle (Abgleich Anordnung und Medikament) stattfinden. Die eindeutige Beschriftung und der Abgleich mit dem Patienten (Ansprache, Identifikationsarmband) tragen zur eindeutigen Identifikation des richtigen Patienten bei.',
+        frequency: 'nicht anwendbar', reporter: 'Pflege-, Praxispersonal', factors: [
+          Factor(content: 'Kommunikation (im Team, mit Patienten, mit anderen Ärzten etc.)'),
+          Factor(content: 'Organisation (zu wenig Personal, Standards, Arbeitsbelastung, Abläufe etc.)'),
+          Factor(content: 'Patientenfaktoren (Sprache, Einschränkungen, med. Zustand etc.)')
+        ]);
+    QuestionnaireService questionnaireService = QuestionnaireService('http://10.0.2.2:8080');
+    await questionnaireService.postQuestionnaire(questionnaire);
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -134,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: loginUser, //_incrementCounter,
+        onPressed: postQuestionnaireTest, //_incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

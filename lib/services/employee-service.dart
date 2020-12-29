@@ -10,7 +10,8 @@ class EmployeeService extends BaseService {
 
   Future<bool> login(String email, String password) async {
     try {
-      Response response = await post(getRootUrl() + loginPath,
+      Response response = await post(
+          getRootUrl() + loginPath,
           headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
           body: jsonEncode(<String, String>{'email': email, 'password': password}));
       Map data = jsonDecode(response.body);
@@ -20,7 +21,6 @@ class EmployeeService extends BaseService {
       print('Caught error: $error');
       return false;
     }
-
     return true;
   }
 }
