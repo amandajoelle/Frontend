@@ -1,5 +1,6 @@
 import 'package:cirs/services/employee-service.dart';
 import 'package:cirs/services/factor-service.dart';
+import 'package:cirs/services/feedback-service.dart' as CirsFeedback;
 import 'package:cirs/services/questionnaire-service.dart';
 import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/material.dart';
@@ -112,6 +113,36 @@ class _MyHomePageState extends State<MyHomePage> {
     QuestionnaireService questionnaireService = QuestionnaireService('http://10.0.2.2:8080');
     await questionnaireService.postQuestionnaire(questionnaire);
   }
+  
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getFeedbackTest() async {
+    CirsFeedback.FeedbackService feedbackService = CirsFeedback.FeedbackService('http://10.0.2.2:8080');
+    await feedbackService.getFeedback('bf190b76-7bf8-4eff-b599-2bb2b3506014');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void postFeedbackTest() async {
+    await loginUser();
+    CirsFeedback.Feedback feedback = CirsFeedback.Feedback(comment: 'War nicht so gut',
+        solution: 'Einfach besser machen', factors: [
+          Factor(content: 'Kommunikation (im Team, mit Patienten, mit anderen Ärzten etc.)'),
+          Factor(content: 'Organisation (zu wenig Personal, Standards, Arbeitsbelastung, Abläufe etc.)'),
+          Factor(content: 'Patientenfaktoren (Sprache, Einschränkungen, med. Zustand etc.)')
+        ]);
+    CirsFeedback.FeedbackService feedbackService = CirsFeedback.FeedbackService('http://10.0.2.2:8080');
+    await feedbackService.postFeedback(feedback, '1');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void updateFeedbackTest() async {
+    await loginUser();
+    CirsFeedback.Feedback feedback = CirsFeedback.Feedback(solution: 'Noch besser machen!');
+    CirsFeedback.FeedbackService feedbackService = CirsFeedback.FeedbackService('http://10.0.2.2:8080');
+    await feedbackService.updateFeedback(feedback, 'bf190b76-7bf8-4eff-b599-2bb2b3506014');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: postQuestionnaireTest, //_incrementCounter,
+        onPressed: updateFeedbackTest, //_incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
