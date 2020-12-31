@@ -21,7 +21,7 @@ class NavDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 35),
             ),
             decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.blue,
                 image: DecorationImage(
                     fit: BoxFit.fill,
                     image: AssetImage('C:\Users\Amanda\AndroidStudioProjects\localization\image/Hintergrund.jpg'))),
@@ -29,12 +29,24 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.input),
             title: Text('Login'),
-            onTap: () => {Navigator.of(context).pop()},
+           // onTap: () => {Navigator.of(context).pop()},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => Login()),
+                );
+              }
           ),
           ListTile(
             leading: Icon(Icons.business_center),
             title: Text('Fälle bearbeiten'),
-            onTap: () => {Navigator.of(context).pop()},
+           // onTap: () => {Navigator.of(context).pop()},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => Bearbeitende()),
+                );
+              }
           ),
           ListTile(
             leading: Icon(Icons.border_color),

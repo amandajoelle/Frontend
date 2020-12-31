@@ -42,8 +42,8 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Text('Willkommen In der Critical Incedent Reporting System App',
-      textAlign : TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 35),
+          style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
         ),
       ),
     );
