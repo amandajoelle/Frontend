@@ -45,7 +45,7 @@ class FeedbackService extends BaseService {
     return true;
   }
 
-  Future<List<int>> updateFeedback(Feedback feedback, String feedbackId) async {
+  Future<List<int>> updateFeedback(String feedbackId, Feedback feedback) async {
     String token = TokenStorage().getToken();
     List<int> updateResponse;
     try {

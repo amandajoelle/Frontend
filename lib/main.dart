@@ -139,9 +139,40 @@ class _MyHomePageState extends State<MyHomePage> {
   // TODO: remove function after testing
   void updateFeedbackTest() async {
     await loginUser();
-    CirsFeedback.Feedback feedback = CirsFeedback.Feedback(solution: 'Noch besser machen!');
+    // CirsFeedback.Feedback feedback = CirsFeedback.Feedback(solution: 'Noch besser machen!');
     CirsFeedback.FeedbackService feedbackService = CirsFeedback.FeedbackService('http://10.0.2.2:8080');
-    await feedbackService.updateFeedback(feedback, 'bf190b76-7bf8-4eff-b599-2bb2b3506014');
+    CirsFeedback.Feedback feedback = await feedbackService.getFeedback('bf190b76-7bf8-4eff-b599-2bb2b3506014');
+    await feedbackService.updateFeedback(feedback.feedbackId, feedback);
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getFactorTest() async {
+    FactorService factorService = FactorService('http://10.0.2.2:8080');
+    await factorService.getFactor('6949d54a-df0a-4b7b-9c8b-fe9f372c6167');
+  }
+  
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getAllFactorsOfQuestionnaireTest() async {
+    FactorService factorService = FactorService('http://10.0.2.2:8080');
+    await factorService.getAllFactorsOfQuestionnaire('089e25c8-f012-4cc7-bfdb-bb944ff611c3');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getAllFactorsOfFeedbackTest() async {
+    FactorService factorService = FactorService('http://10.0.2.2:8080');
+    await factorService.getAllFactorsOfFeedback('601c6e2b-5500-41bb-a5d7-852aec0b3695');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void updateFactorTest() async {
+    FactorService factorService = FactorService('http://10.0.2.2:8080');
+    Factor factor = await factorService.getFactor('6949d54a-df0a-4b7b-9c8b-fe9f372c6167');
+    factor.content = 'Changed content';
+    await factorService.updateFactor(factor.factorId, factor);
   }
 
   @override
@@ -190,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: updateFeedbackTest, //_incrementCounter,
+        onPressed: updateFactorTest, //_incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
