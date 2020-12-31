@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'NavDrawer.dart';
+import 'nav-drawer.dart';
 
 
-class Bearbeitende extends StatelessWidget {
+class ProcessingCases extends StatelessWidget {
   static const String _title = 'Zu bearbeitende Fälle';
 
   @override

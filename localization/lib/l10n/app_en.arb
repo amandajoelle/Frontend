@@ -1,6 +1,0 @@
-{
-  "helloWorld": "Hello CIRS!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
-}
