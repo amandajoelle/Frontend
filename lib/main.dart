@@ -5,6 +5,7 @@ import 'package:cirs/nav-drawer.dart';
 import 'package:cirs/services/employee-service.dart';
 import 'package:cirs/services/factor-service.dart';
 import 'package:cirs/services/feedback-service.dart' as CirsFeedback;
+import 'package:cirs/services/medical-case-service.dart';
 import 'package:cirs/services/questionnaire-service.dart';
 import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/material.dart';
@@ -220,6 +221,39 @@ class _MyHomePageState extends State<MyHomePage> {
     await factorService.updateFactor(factor.factorId, factor);
   }
 
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getMedicalCaseTest() async {
+    MedicalCaseService medicalCaseService = MedicalCaseService('http://10.0.2.2:8080');
+    await medicalCaseService.getMedicalCase('1');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getAllDoneCasesTest() async {
+    MedicalCaseService medicalCaseService = MedicalCaseService('http://10.0.2.2:8080');
+    await medicalCaseService.getAllDoneMedicalCases();
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getAllIncompleteCasesTest() async {
+    await loginUser();
+    MedicalCaseService medicalCaseService = MedicalCaseService('http://10.0.2.2:8080');
+    await medicalCaseService.getAllIncompleteMedicalCases();
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void updateMedicalCaseTest() async {
+    await loginUser();
+    MedicalCaseService medicalCaseService = MedicalCaseService('http://10.0.2.2:8080');
+    MedicalCase medicalCase = await medicalCaseService.getMedicalCase('8c8625d5-de18-43a4-8a74-41290831b167');
+    medicalCase.title = 'Neuer Title';
+    await medicalCaseService.updateMedicalCase(medicalCase.caseId, medicalCase);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -266,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: updateFactorTest, //_incrementCounter,
+        onPressed: updateMedicalCaseTest, //_incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

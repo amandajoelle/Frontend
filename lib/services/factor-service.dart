@@ -16,7 +16,6 @@ class FactorService extends BaseService {
           headers: {'Accept': 'application/json'});
       Map data = jsonDecode(response.body);
       factor = Factor.fromJson(data);
-      print('Factor: $factor');
     } catch (error) {
       print('Caught error: $error');
       return null;
@@ -45,7 +44,6 @@ class FactorService extends BaseService {
           getRootUrl() + factorPath + 'feedback/$feedbackId',
           headers: {'Accept':'application/json'});
       factors = Factor.convertDynamicToFactor(jsonDecode(response.body));
-      print('Factors: $factors');
     } catch(error) {
       print('Caught error: $error');
       return null;
@@ -65,7 +63,6 @@ class FactorService extends BaseService {
           body: jsonEncode(factor));
       print(response.statusCode);
       updateResponse = jsonDecode(response.body).cast<int>();
-      print('Updated: $updateResponse');
     } catch(error) {
       print('Caught error: $error');
       return null;
