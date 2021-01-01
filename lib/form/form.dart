@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Report_Questionnaire extends StatefulWidget {
+class ReportQuestionnaire extends StatefulWidget {
   @override
-  _Report_QuestionnaireState createState() => _Report_QuestionnaireState();
+  _ReportQuestionnaireState createState() => _ReportQuestionnaireState();
 }
 
-class _Report_QuestionnaireState extends State<Report_Questionnaire> {
+class _ReportQuestionnaireState extends State<ReportQuestionnaire> {
   @override
   Widget build(BuildContext context) {
     return Container(
