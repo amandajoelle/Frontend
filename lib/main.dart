@@ -2,6 +2,7 @@ import 'package:cirs/nav-drawer.dart';
 import 'package:cirs/processing-cases.dart';
 import 'package:cirs/login.dart';
 import 'package:cirs/nav-drawer.dart';
+import 'package:cirs/services/classification-service.dart';
 import 'package:cirs/services/employee-service.dart';
 import 'package:cirs/services/factor-service.dart';
 import 'package:cirs/services/feedback-service.dart' as CirsFeedback;
@@ -251,7 +252,32 @@ class _MyHomePageState extends State<MyHomePage> {
     MedicalCase medicalCase = await medicalCaseService.getMedicalCase('8c8625d5-de18-43a4-8a74-41290831b167');
     medicalCase.title = 'Neuer Title';
     await medicalCaseService.updateMedicalCase(medicalCase.caseId, medicalCase);
+  }
 
+  // just for testing purposes
+  // TODO: remove function after testing
+  void getClassificationTest() async {
+    ClassificationService classificationService = ClassificationService('http://10.0.2.2:8080');
+    await classificationService.getClassification('8bb02e2d-15a2-4745-b0a7-c0d4570ff161');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void postClassificationTest() async {
+    await loginUser();
+    ClassificationService classificationService = ClassificationService('http://10.0.2.2:8080');
+    Classification classification = Classification(category: 'Gut');
+    await classificationService.postClassification(classification, '1');
+  }
+
+  // just for testing purposes
+  // TODO: remove function after testing
+  void updateClassificationTest() async {
+    await loginUser();
+    ClassificationService classificationService = ClassificationService('http://10.0.2.2:8080');
+    Classification classification = await classificationService.getClassification('8bb02e2d-15a2-4745-b0a7-c0d4570ff161');
+    classification.category = 'Doch nicht so schlimm';
+    await classificationService.updateClassification(classification.classId, classification);
   }
 
   @override
@@ -300,7 +326,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: updateMedicalCaseTest, //_incrementCounter,
+        onPressed: updateClassificationTest, //_incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
