@@ -1,7 +1,6 @@
 
+import 'package:cirs/drawer/drawer.dart';
 import 'package:flutter/material.dart';
-
-import 'drawer/nav-drawer.dart';
 
 
 class ProcessingCases extends StatelessWidget {
@@ -12,7 +11,7 @@ class ProcessingCases extends StatelessWidget {
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        drawer: NavDrawer(),
+        drawer: MyDrawer(),
         appBar: AppBar(title: const Text(_title)),
         body: MyStatelessWidget(),
       ),

@@ -1,8 +1,11 @@
+import 'package:cirs/services/employee-service.dart';
 import 'package:flutter/material.dart';
-import 'drawer/nav-drawer.dart';
 import 'main.dart';
 
 class Login extends StatelessWidget {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +34,11 @@ class Login extends StatelessWidget {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                    hintText: 'Enter valid email id as abc@cirs.de'),
               ),
             ),
             Padding(
@@ -42,7 +46,7 @@ class Login extends StatelessWidget {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -50,6 +54,8 @@ class Login extends StatelessWidget {
                     hintText: 'Enter secure password'),
               ),
             ),
+            // TODO: remove FlatButton for Forgot Password, because this function is not desired
+            /*
             FlatButton(
               onPressed: (){
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
@@ -59,18 +65,25 @@ class Login extends StatelessWidget {
                 style: TextStyle(color: Colors.blue, fontSize: 15),
               ),
             ),
+            */
+            SizedBox(height: 30.0,),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => MyHomePage()));
+                onPressed: () async {
+                  EmployeeService employeeService = EmployeeService(serverUrl);
+                  await employeeService.login(emailController.text, passwordController.text);
+                  final snackBar = SnackBar(
+                      content: Text('Erfolgreich angemeldet', textAlign: TextAlign.center)
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.popAndPushNamed(context, 'home');
                 },
                 child: Text(
-                  'Login',
+                  'Absenden',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
