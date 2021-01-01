@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
-import 'processing-cases.dart';
-import 'main.dart';
+import '../login.dart';
+import '../processing-cases.dart';
+import '../main.dart';
 
 class NavDrawer extends StatelessWidget {
   navigateToPage(BuildContext context, String page) {
