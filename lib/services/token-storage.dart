@@ -1,8 +1,11 @@
+import 'package:rxdart/rxdart.dart';
+
 class TokenStorage {
   static final TokenStorage _instance = TokenStorage._internal();
   factory TokenStorage() => _instance;
 
   String _token;
+  BehaviorSubject _tokenSubject = BehaviorSubject.seeded(null);
 
   TokenStorage._internal();
 
@@ -11,6 +14,9 @@ class TokenStorage {
   }
 
   void setToken(String token) {
-    this._token = token;
+    _token = token;
+    _tokenSubject.add(token);
   }
+
+  Stream get stream$ => _tokenSubject.stream;
 }

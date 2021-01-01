@@ -1,7 +1,7 @@
-import 'package:cirs/nav-drawer.dart';
+import 'package:cirs/drawer/nav-drawer.dart';
 import 'package:cirs/processing-cases.dart';
 import 'package:cirs/login.dart';
-import 'package:cirs/nav-drawer.dart';
+import 'package:cirs/drawer/nav-drawer.dart';
 import 'package:cirs/services/classification-service.dart';
 import 'package:cirs/services/employee-service.dart';
 import 'package:cirs/services/factor-service.dart';
@@ -12,7 +12,7 @@ import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'drawer.dart';
+import 'drawer/drawer.dart';
 
 void main() {
   //runApp(MyApp());

@@ -1,6 +1,7 @@
+import 'package:cirs/drawer/drawer-items.dart';
 import 'package:flutter/material.dart';
-import 'form/form.dart';
 
+/*
 BuildContext cont;
 
 ListView lv = new ListView(
@@ -43,11 +44,35 @@ ListView lv = new ListView(
     ),
   ],
 );
+*/
 
 class MyDrawer extends StatelessWidget {
+  // Stream _tokenStream$ = TokenStorage().stream$;
+
   @override
   Widget build(BuildContext context) {
-    cont = context;
-    return Drawer(child: lv);
+    //cont = context;
+    //return Drawer(child: lv);
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        //TODO: Change Icons
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text(
+              'CIRS App',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          DrawerItems(),
+        ],
+      ),
+    );
   }
 }
