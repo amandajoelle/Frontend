@@ -1,5 +1,7 @@
 
 import 'package:cirs/drawer/drawer.dart';
+import 'package:cirs/main.dart';
+import 'package:cirs/services/medical-case-service.dart';
 import 'package:flutter/material.dart';
 
 
@@ -21,117 +23,102 @@ class ProcessingCases extends StatelessWidget {
 
 /// This is the stateless widget that the main application instantiates.
 class MyStatelessWidget extends StatelessWidget {
-  MyStatelessWidget({Key key}) : super(key: key);
+  MedicalCaseService medicalCaseService;
+  Future<List<MedicalCase>> _cases;
+
+  MyStatelessWidget({Key key}) : super(key: key) {
+    medicalCaseService = MedicalCaseService(serverUrl);
+    _cases = medicalCaseService.getAllIncompleteMedicalCases();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      columns: const <DataColumn>[
-        DataColumn(
-          label: Text(
-            'Fall-Nr',
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-        ),
-        DataColumn(
-          label: Text(
-            'Titel',
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-        ),
-        DataColumn(
-          label: Text(
-            'Bearbeiter',
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-        ),
-      ],
-      rows: const <DataRow>[
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0001')),
-            DataCell(Text('Fall_1')),
-            DataCell(Text('Meier')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0002')),
-            DataCell(Text('Fall_2')),
-            DataCell(Text('Müller')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0003')),
-            DataCell(Text('Fall_3')),
-            DataCell(Text('')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0004')),
-            DataCell(Text('Fall_4')),
-            DataCell(Text('')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0005')),
-            DataCell(Text('Fall_5')),
-            DataCell(Text('Meier')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0006')),
-            DataCell(Text('Fall_6')),
-            DataCell(Text('Musermann')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0007')),
-            DataCell(Text('Fall_7')),
-            DataCell(Text('Musterfrau')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0008')),
-            DataCell(Text('Fall_8')),
-            DataCell(Text('')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0009')),
-            DataCell(Text('Fall_9')),
-            DataCell(Text('')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0010')),
-            DataCell(Text('Fall_10')),
-            DataCell(Text('')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0011')),
-            DataCell(Text('Fall_11')),
-            DataCell(Text('Müller')),
-          ],
-        ),
-        DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0012')),
-            DataCell(Text('Fall_12')),
-            DataCell(Text('Musterfrau')),
-          ],
-        ),
-      ],
+    return FutureBuilder(
+        future: _cases,
+        builder: (BuildContext context, AsyncSnapshot<List<MedicalCase>> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            children = <Widget>[
+              DataTable(columns: [
+                DataColumn(
+                  label: Text(
+                    'Fall-Nr',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Titel',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Bearbeiter',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ], rows: <DataRow>[
+                for (final item in snapshot.data) DataRow(
+                    onSelectChanged: (bool selected) {
+                      if (selected) {
+                        // TODO: navigate to next screen with routing parameters (item.caseId)
+                      }
+                    },
+                    cells: <DataCell>[
+                      DataCell(
+                          Container(
+                              width: 80,
+                              child: Text(item.caseId)
+                          )
+                      ),
+                      DataCell(
+                          Container(
+                              width: 110,
+                              child: Text(item.title == null ? 'Ohne Titel' : item.title)
+                          )
+                      ),
+                      DataCell(Text(item.editor == null ? '' : item.employee.lastname))
+                    ],
+                )
+              ]
+              )
+            ];
+          }
+          else if(snapshot.hasError) {
+            children = <Widget>[
+              Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              )
+            ];
+          }
+          else {
+            children = <Widget>[
+              SizedBox(
+                child: CircularProgressIndicator(),
+                width: 60,
+                height: 60,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Lade Daten...'),
+              )
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children,
+            ),
+          );
+        }
     );
   }
 }

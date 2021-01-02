@@ -24,3 +24,28 @@ class EmployeeService extends BaseService {
     return true;
   }
 }
+
+class Employee {
+  String employeeId;
+  String email;
+  String password;
+  String forename;
+  String lastname;
+
+  Employee({this.employeeId, this.email, this.password, this.forename, this.lastname});
+
+  factory Employee.fromJson(Map<String, dynamic> json) {
+    return Employee(
+      employeeId: json['employee_id'],
+      email: json['email'],
+      password: json['password'],
+      forename: json['forename'],
+      lastname: json['lastname']
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Id: $employeeId, email: $email, forename: $forename, lastname: $lastname';
+  }
+}

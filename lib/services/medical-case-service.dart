@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cirs/services/base-service.dart';
 import 'package:cirs/services/token-storage.dart';
+import 'package:cirs/services/employee-service.dart';
 import 'package:http/http.dart';
 
 class MedicalCaseService extends BaseService {
@@ -18,7 +19,6 @@ class MedicalCaseService extends BaseService {
           headers: {'Accept':'application/json'});
       Map data = jsonDecode(response.body);
       medicalCase = MedicalCase.fromJson(data);
-      print('Medical_Case: $medicalCase');
     } catch(error) {
       print('Caught error: $error');
       return null;
@@ -88,9 +88,10 @@ class MedicalCase {
   String questionnaire;
   String classification;
   String editor;
+  Employee employee;
 
   MedicalCase({this.caseId, this.title, this.status, this.feedback,
-    this.questionnaire, this.classification, this.editor});
+    this.questionnaire, this.classification, this.editor, this.employee});
 
   factory MedicalCase.fromJson(Map<String, dynamic> json) {
     return MedicalCase(
@@ -100,7 +101,8 @@ class MedicalCase {
       feedback: json['feedback'],
       questionnaire: json['questionnaire'],
       classification: json['classification'],
-      editor: json['editor']
+      editor: json['editor'],
+      employee: Employee.fromJson(json['Employee'])
     );
   }
 
@@ -121,7 +123,8 @@ class MedicalCase {
       MedicalCase medicalCase = MedicalCase(caseId: elem['case_id'], title: elem['title'],
           status: elem['status'], feedback: elem['feedback'],
           questionnaire: elem['questionnaire'], classification: elem['classification'],
-          editor: elem['editor']);
+          editor: elem['editor'], employee: elem['Employee'] != null ?
+          Employee.fromJson(elem['Employee']) : null );
       medicalCases.add(medicalCase);
     }
     return medicalCases;

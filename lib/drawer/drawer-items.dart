@@ -1,4 +1,5 @@
 import 'package:cirs/drawer/basic-items.dart';
+import 'package:cirs/main.dart';
 import 'package:cirs/processing-cases.dart';
 import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,6 +34,10 @@ class DrawerItems extends StatelessWidget {
                 title: Text('Logout'),
                 onTap: () {
                   TokenStorage().setToken(null);
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(builder: (context) => MyHomePage())
+                  );
                 }
               ),
             ],
