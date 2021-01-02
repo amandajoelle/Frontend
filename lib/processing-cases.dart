@@ -60,6 +60,11 @@ class MyStatelessWidget extends StatelessWidget {
                 ),
               ], rows: <DataRow>[
                 for (final item in snapshot.data) DataRow(
+                    onSelectChanged: (bool selected) {
+                      if (selected) {
+                        // TODO: navigate to next screen with routing parameters (item.caseId)
+                      }
+                    },
                     cells: <DataCell>[
                       DataCell(
                           Container(
@@ -73,7 +78,7 @@ class MyStatelessWidget extends StatelessWidget {
                               child: Text(item.title == null ? 'Ohne Titel' : item.title)
                           )
                       ),
-                      DataCell(Text(item.editor == null ? '' : item.editor))
+                      DataCell(Text(item.editor == null ? '' : item.employee.lastname))
                     ],
                 )
               ]
