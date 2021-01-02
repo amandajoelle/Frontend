@@ -24,6 +24,18 @@ class BasicItems extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.info_rounded),
           title: Text('Über'),
+          onTap: () {
+            showAboutDialog(
+                context: context,
+                applicationName: 'CIRS App',
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: Text('Informationen über die CIRS App'),
+                  )
+                ]
+            );
+          }
         ),
       ],
     );
