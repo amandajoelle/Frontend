@@ -38,7 +38,7 @@ class Login extends StatelessWidget {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@cirs.de'),
+                    hintText: 'Geben Sie ihre Firmen E-Mail Adresse ein: z.B. abc@cirs.de'),
               ),
             ),
             Padding(
@@ -50,8 +50,8 @@ class Login extends StatelessWidget {
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password'),
+                    labelText: 'Passwort',
+                    hintText: 'Geben Sie Ihre zugehöriges Passwort ein'),
               ),
             ),
             // TODO: remove FlatButton for Forgot Password, because this function is not desired
@@ -75,12 +75,24 @@ class Login extends StatelessWidget {
               child: FlatButton(
                 onPressed: () async {
                   EmployeeService employeeService = EmployeeService(serverUrl);
-                  await employeeService.login(emailController.text, passwordController.text);
-                  final snackBar = SnackBar(
-                      content: Text('Erfolgreich angemeldet', textAlign: TextAlign.center)
-                  );
+                  bool result = await employeeService.login(emailController.text, passwordController.text);
+                  final snackBar = result ?
+                      SnackBar(
+                        content: Text('Erfolgreich angemeldet', textAlign: TextAlign.center)
+                      ) :
+                      SnackBar(
+                          content: Text('Email oder Passwort inkorrekt',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                          )
+                      );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.popAndPushNamed(context, 'home');
+                  if (result)
+                    Navigator.popAndPushNamed(context, 'home');
+                  else {
+                    emailController.clear();
+                    passwordController.clear();
+                  }
                 },
                 child: Text(
                   'Absenden',
