@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 
 String dropdownValue = 'One';
 
-enum Job { Pflegepersonal, Arzt, Psychotherapeut, Apotheker, andere_Berufsgruppe }
+enum Job {
+  Pflegepersonal,
+  Arzt,
+  Psychotherapeut,
+  Apotheker,
+  andere_Berufsgruppe
+}
 Job _job = Job.Pflegepersonal;
 
-enum Frequency {nicht_anwendbar, taeglich, monatlich, jaehrlich, erstmalig}
+enum Frequency { nicht_anwendbar, taeglich, monatlich, jaehrlich, erstmalig }
 Frequency _frequency = Frequency.nicht_anwendbar;
+
+bool _checked = false;
+int minLines = 3;
+int maxLines = 5;
 
 // Define a custom Form widget.
 class Questions_Second extends StatefulWidget {
@@ -47,192 +57,33 @@ class Questions_SecondState extends State<Questions_Second> {
 
   List<Step> steps = [
     Step(
-      title: const Text('Zuständiges Fachgebiet'),
+      title: const Text('Was ist passiert?'),
       isActive: true,
       state: StepState.editing,
       content: Column(
         children: <Widget>[
-          DropdownButton<String>(
-            value: dropdownValue,
-            icon: Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            style: TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.deepPurpleAccent,
-            ),
-            onChanged: (String newValue) {
-              /*setState(() {
-                dropdownValue = newValue;
-              });*/
-            },
-            items: <String>['One', 'Two', 'Free', 'Four']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          )
+          TextField(minLines: minLines, maxLines: maxLines),
         ],
       ),
     ),
     Step(
-      title: const Text('Altersgruppe des Patienten'),
-      subtitle: const Text("falls betroffen"),
+      title: const Text('Was war das Ergebnis?'),
       isActive: false,
       state: StepState.editing,
       content: Column(
         children: <Widget>[
-          DropdownButton<String>(
-            value: dropdownValue,
-            icon: Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            style: TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.deepPurpleAccent,
-            ),
-            onChanged: (String newValue) {
-              /*setState(() {
-                dropdownValue = newValue;
-              });*/
-            },
-            items: <String>['One', 'Two', 'Free', 'Four']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          )
+          TextField(minLines: minLines, maxLines: maxLines),
         ],
       ),
     ),
     Step(
+      title: const Text(
+          'Wo sehen Sie Gründe für dieses Ereignis und wie hätte es vermieden werden können?'),
+      isActive: false,
       state: StepState.editing,
-      title: const Text('Wie häufig tritt dieses Ereignis ungefähr auf?'),
       content: Column(
         children: <Widget>[
-          ListTile(
-            title: const Text("nicht anwendbar"),
-            leading: Radio(
-              value: Frequency.nicht_anwendbar,
-              groupValue: _frequency,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-          ListTile(
-            title: const Text("täglich"),
-            leading: Radio(
-              value: Frequency.taeglich,
-              groupValue: _frequency,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-          ListTile(
-            title: const Text("monatlich"),
-            leading: Radio(
-              value: Frequency.monatlich,
-              groupValue: _frequency,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-          ListTile(
-            title: const Text("jährlich"),
-            leading: Radio(
-              value: Frequency.jaehrlich,
-              groupValue: _frequency,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-          ListTile(
-            title: const Text("erstmalig"),
-            leading: Radio(
-              value: Frequency.erstmalig,
-              groupValue: _frequency,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-        ],
-      ),
-    ),
-    Step(
-      state: StepState.editing,
-      title: const Text('Wer berichtet?'),
-      subtitle: const Text("Berufsgruppe"),
-      content: Column(
-        children: <Widget>[
-          ListTile(
-            title: const Text("Pflege-, Praxispersonal"),
-            leading: Radio(
-              value: Job.Pflegepersonal,
-              groupValue: _job,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-          ListTile(
-            title: const Text("Arzt / Ärztin, Psychotherapeut/in"),
-            leading: Radio(
-              value: Job.Arzt,
-              groupValue: _job,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-          ListTile(
-            title: const Text("Apotheker / Apothekerin"),
-            leading: Radio(
-              value: Job.Apotheker,
-              groupValue: _job,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
-          ListTile(
-            title: const Text("andere Berufsgruppe"),
-            leading: Radio(
-              value: Job.andere_Berufsgruppe,
-              groupValue: _job,
-              /*onChanged: (Gender value) {
-                setState(() {
-                _gender = value;
-                });
-              }*/
-            ),
-          ),
+          TextField(minLines: minLines, maxLines: maxLines),
         ],
       ),
     ),
@@ -242,15 +93,15 @@ class Questions_SecondState extends State<Questions_Second> {
   Widget build(BuildContext context) {
     return new Scaffold(
         body: Column(children: <Widget>[
-          Expanded(
-            child: Stepper(
-              steps: steps,
-              currentStep: currentStep,
-              onStepContinue: next,
-              onStepTapped: (step) => goTo(step),
-              onStepCancel: cancel,
-            ),
-          ),
-        ]));
+      Expanded(
+        child: Stepper(
+          steps: steps,
+          currentStep: currentStep,
+          onStepContinue: next,
+          onStepTapped: (step) => goTo(step),
+          onStepCancel: cancel,
+        ),
+      ),
+    ]));
   }
 }

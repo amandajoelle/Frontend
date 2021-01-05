@@ -189,16 +189,16 @@ class Questions_FirstState extends State<Questions_First> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-         body: Column(children: <Widget>[
-          Expanded(
-            child: Stepper(
-              steps: steps,
-              currentStep: currentStep,
-              onStepContinue: next,
-              onStepTapped: (step) => goTo(step),
-              onStepCancel: cancel,
-            ),
-          ),
-        ]));
+        body: Column(children: <Widget>[
+      Expanded(
+        child: Stepper(
+          steps: steps,
+          currentStep: currentStep,
+          onStepContinue: next,
+          onStepTapped: (step) => goTo(step),
+          onStepCancel: cancel,
+        ),
+      ),
+    ]));
   }
 }
