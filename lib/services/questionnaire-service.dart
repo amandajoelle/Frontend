@@ -5,15 +5,17 @@ import 'package:cirs/services/factor-service.dart';
 import 'package:http/http.dart';
 
 class QuestionnaireService extends BaseService {
+  /// Additional route to the factors, which doesn't need a token
   final String questionnairePath = '/questionnaire/';
 
-  QuestionnaireService(String url): super(rootUrl: url);
+  QuestionnaireService(String url): super(url);
 
+  /// Fetches a [Questionnaire] by its id [questionnaireId].
   Future<Questionnaire> getQuestionnaire(String questionnaireId) async {
     Questionnaire questionnaire;
     try {
       Response response = await get(
-          getRootUrl() + questionnairePath + questionnaireId,
+          rootUrl + questionnairePath + questionnaireId,
           headers: {'Accept':'application/json'});
       Map data = jsonDecode(response.body);
       questionnaire = Questionnaire.fromJson(data);
@@ -24,10 +26,13 @@ class QuestionnaireService extends BaseService {
     return questionnaire;
   }
 
+  /// Creates a new [Questionnaire], with all the included factors.
+  ///
+  /// Returns [bool] true, if the classification is successfully persisted.
   Future<bool> postQuestionnaire(Questionnaire questionnaire) async {
     try {
       Response response = await post(
-          getRootUrl() + questionnairePath,
+          rootUrl + questionnairePath,
           headers: {'Accept':'application/json', 'Content-Type':'application/json'},
           body: jsonEncode(questionnaire));
       print(response.statusCode);
@@ -56,6 +61,8 @@ class Questionnaire {
     this.location, this.event, this.result, this.reasons, this.frequency,
     this.reporter, this.factors});
 
+  /// A factory method to convert a receiving Map, from the backend.,
+  /// to a [Questionnaire] object.
   factory Questionnaire.fromJson(Map<String, dynamic> json) {
     return Questionnaire(
       questionnaireId: json['question_id'],
@@ -72,6 +79,7 @@ class Questionnaire {
     );
   }
 
+  /// Converts the current [Questionnaire] object into a Json object.
   Map<String, dynamic> toJson() {
     return{
       'expertise': expertise,

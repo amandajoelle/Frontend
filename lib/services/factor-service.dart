@@ -4,15 +4,17 @@ import 'package:cirs/services/base-service.dart';
 import 'package:http/http.dart';
 
 class FactorService extends BaseService {
+  /// Additional route to the factors, which doesn't need a token
   final String factorPath = '/factor/';
 
-  FactorService(String url) : super(rootUrl: url);
+  FactorService(String url) : super(url);
 
+  /// Fetches a [Factor] by its id [factorId].
   Future<Factor> getFactor(String factorId) async {
     Factor factor;
     try {
       Response response = await get(
-          getRootUrl() + factorPath + factorId,
+          rootUrl + factorPath + factorId,
           headers: {'Accept': 'application/json'});
       Map data = jsonDecode(response.body);
       factor = Factor.fromJson(data);
@@ -23,11 +25,12 @@ class FactorService extends BaseService {
     return factor;
   }
 
+  /// Fetches all factors of a questionnaire by the [questionnaireId].
   Future<List<Factor>> getAllFactorsOfQuestionnaire(String questionnaireId) async {
     List<Factor> factors;
     try {
       Response response = await get(
-          getRootUrl() + factorPath + 'questionnaire/$questionnaireId',
+          rootUrl + factorPath + 'questionnaire/$questionnaireId',
           headers: {'Accept': 'application/json'});
       factors = Factor.convertDynamicToFactor(jsonDecode(response.body));
     } catch (error) {
@@ -37,11 +40,12 @@ class FactorService extends BaseService {
     return factors;
   }
 
+  /// Fetches all factors of one feedback by the [feedbackId].
   Future<List<Factor>> getAllFactorsOfFeedback(String feedbackId) async {
     List<Factor> factors;
     try {
       Response response = await get(
-          getRootUrl() + factorPath + 'feedback/$feedbackId',
+          rootUrl + factorPath + 'feedback/$feedbackId',
           headers: {'Accept':'application/json'});
       factors = Factor.convertDynamicToFactor(jsonDecode(response.body));
     } catch(error) {
@@ -51,11 +55,15 @@ class FactorService extends BaseService {
     return factors;
   }
 
+  /// Updates a [Factor] with an altered [factor] object, and specifies
+  /// his id [factorId].
+  ///
+  /// Returns a [List] with the number of altered objects.
   Future<List<int>> updateFactor(String factorId, Factor factor) async {
     List<int> updateResponse;
     try {
       Response response = await put(
-          getRootUrl() + factorPath + factorId,
+          rootUrl + factorPath + factorId,
           headers: {
             'Accept':'application/json',
             'Content-Type':'application/json'
@@ -79,6 +87,8 @@ class Factor {
 
   Factor({this.factorId, this.content, this.feedback, this.questionnaire});
 
+  /// A factory method to convert a receiving Map, from the backend.,
+  /// to a [Factor] object.
   factory Factor.fromJson(Map<String, dynamic> json) {
     return Factor(
       factorId: json['factor_id'],
@@ -88,6 +98,7 @@ class Factor {
     );
   }
 
+  /// Coverts the backend factors [response] to a [List] of Factors.
   static List<Factor> convertDynamicToFactor(List<dynamic> response) {
     List<Factor> factors = [];
     for(final elem in response) {
@@ -98,6 +109,7 @@ class Factor {
     return factors;
   }
 
+  /// Converts the current [Factor] object into a Json object.
   Map<String, dynamic> toJson() {
     return {
       'content': content,
