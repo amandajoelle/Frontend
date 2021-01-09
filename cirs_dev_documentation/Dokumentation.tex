@@ -1,0 +1,101 @@
+\documentclass[a4paper, 12pt]{scrreprt}
+\usepackage[left = 2.5cm,right = 2cm,bottom = 4cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[
+	pdftitle={Dokumentation kürzeste Pfade},
+	pdfsubject={},
+	pdfauthor={Robin Meier, Stefan Manthey},
+	pdfkeywords={},
+	hidelinks
+]{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx,subfig}
+\graphicspath{{img/}}
+\usepackage{fancyhdr}
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[subfigure]{tocloft}
+\usepackage{hyperref}
+\fontfamily{vna}\selectfont
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{mystyle}{
+	numbers=left,
+	frame=single,
+	basicstyle=\small,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=15pt,tabsize=4,
+	flexiblecolumns=true,
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen}, 
+	stringstyle=\color{mauve},
+	numberstyle=\tiny\color{gray},
+	language=Java,
+	breaklines=true,
+	breakatwhitespace=true,
+	morekeywords={*,num,String,var,library,get,set}
+}
+
+\lstset{style=mystyle}
+
+\usepackage[backend=bibtex, style=numeric]{biblatex}
+%\addbibresource{Literatur.bib}
+
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{\slshape \leftmark}
+
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+\pagestyle{empty}
+\pagenumbering{Roman}
+
+\include{01_titel}
+
+\cleardoubleoddpage
+\pagestyle{fancy}
+
+\renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % for sections
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+%\listoftables
+%\newpage
+\lstlistoflistings
+\newpage
+
+%Hier die Inhalte inkludieren
+\pagenumbering{arabic}
+\include{02_problemstellung}
+\include{03_entwickler_dokumentation}
+
+
+%Literaturverzeichnis
+%\printbibliography[
+%heading=bibintoc,
+%title={Quellenverzeichnis}
+%]
+
+\end{document}
