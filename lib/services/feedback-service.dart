@@ -6,16 +6,19 @@ import 'package:cirs/services/token-storage.dart';
 import 'package:http/http.dart';
 
 class FeedbackService extends BaseService {
+  /// Additional route to the feedback's, which doesn't need a token
   final String feedbackPath = '/feedback/';
+  /// Additional route to the feedback's, which needs a token
   final String safeFeedbackPath = '/cirs_feedback/';
 
-  FeedbackService(String url): super(rootUrl: url);
+  FeedbackService(String url): super(url);
 
+  /// Fetches a [Feedback] by its id [feedbackId].
   Future<Feedback> getFeedback(String feedbackId) async {
     Feedback feedback;
     try {
       Response response = await get(
-          getRootUrl() + feedbackPath + feedbackId,
+          rootUrl + feedbackPath + feedbackId,
           headers: {'Accept':'application/json'});
       Map data = jsonDecode(response.body);
       feedback = Feedback.fromJson(data);
@@ -26,11 +29,14 @@ class FeedbackService extends BaseService {
     return feedback;
   }
 
+  /// Creates a new [Feedback], which is linked with the [medicalCaseId].
+  ///
+  /// Returns [bool] true, if the classification is successfully persisted.
   Future<bool> postFeedback(Feedback feedback, String medicalCaseId) async {
     String token = TokenStorage().getToken();
     try {
       Response response = await post(
-          getRootUrl() + safeFeedbackPath,
+          rootUrl + safeFeedbackPath,
           headers: {
             'Accept':'application/json',
             'Content-Type':'application/json',
@@ -45,12 +51,16 @@ class FeedbackService extends BaseService {
     return true;
   }
 
+  /// Updates a [Feedback] with an altered [feedback] object, and specifies
+  /// his id [feedbackId].
+  ///
+  /// Returns a [List] with the number of altered objects.
   Future<List<int>> updateFeedback(String feedbackId, Feedback feedback) async {
     String token = TokenStorage().getToken();
     List<int> updateResponse;
     try {
       Response response = await put(
-          getRootUrl() + safeFeedbackPath + feedbackId,
+          rootUrl + safeFeedbackPath + feedbackId,
           headers: {
             'Accept':'application/json',
             'Content-Type':'application/json',
@@ -75,6 +85,8 @@ class Feedback {
 
   Feedback({this.feedbackId, this.comment, this.solution, this.factors});
 
+  /// A factory method to convert a receiving Map, from the backend.,
+  /// to a [Feedback] object.
   factory Feedback.fromJson(Map<String, dynamic> json) {
     return Feedback(
       feedbackId: json['feedback_id'],
@@ -84,6 +96,7 @@ class Feedback {
     );
   }
 
+  /// Converts the current [Feedback] object into a Json object.
   Map<String, dynamic> toJson() {
     return {
       'comment': comment,

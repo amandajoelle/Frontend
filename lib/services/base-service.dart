@@ -1,13 +1,6 @@
-class BaseService {
-  String rootUrl;
+abstract class BaseService {
+  /// The Base URL to the backend server
+  final String rootUrl;
 
-  BaseService({this.rootUrl});
-
-  String getRootUrl() {
-    return this.rootUrl;
-  }
-
-  void setRootUrl(String url) {
-    this.rootUrl = url;
-  }
+  BaseService(this.rootUrl);
 }

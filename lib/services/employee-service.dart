@@ -1,17 +1,22 @@
 import 'dart:convert';
+
 import 'package:cirs/services/base-service.dart';
 import 'package:cirs/services/token-storage.dart';
 import 'package:http/http.dart';
 
 class EmployeeService extends BaseService {
+  /// Additional route for the login.
   final String loginPath = "/login/";
 
-  EmployeeService(String url): super(rootUrl: url);
+  EmployeeService(String url): super(url);
 
+  /// Logs in an employee with his [email] address and [password].
+  ///
+  /// Return [bool] true, if the login procedure was successful.
   Future<bool> login(String email, String password) async {
     try {
       Response response = await post(
-          getRootUrl() + loginPath,
+          rootUrl + loginPath,
           headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
           body: jsonEncode(<String, String>{'email': email, 'password': password}));
       Map data = jsonDecode(response.body);
@@ -34,6 +39,8 @@ class Employee {
 
   Employee({this.employeeId, this.email, this.password, this.forename, this.lastname});
 
+  /// A factory method to convert a receiving Map, from the backend.,
+  /// to a [Employee] object.
   factory Employee.fromJson(Map<String, dynamic> json) {
     return Employee(
       employeeId: json['employee_id'],
