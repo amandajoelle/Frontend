@@ -1,7 +1,10 @@
+import 'package:cirs/Fall_1.dart';
 import 'package:flutter/material.dart';
 import '../login.dart';
 import '../processing-cases.dart';
 import '../main.dart';
+import '../Vorfaelle.dart';
+import '../Fall_1.dart';
 
 class NavDrawer extends StatelessWidget {
   navigateToPage(BuildContext context, String page) {
@@ -20,12 +23,7 @@ class NavDrawer extends StatelessWidget {
               textAlign : TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 35),
             ),
-            // TODO: Remove Image
-            /* decoration: BoxDecoration(
-                color: Colors.blue,
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('C:\Users\Amanda\AndroidStudioProjects\localization\image/Hintergrund.jpg'))), */
+
           ),
           ListTile(
             leading: Icon(Icons.input),
@@ -61,7 +59,7 @@ class NavDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                 new MaterialPageRoute(builder: (context) => ProcessingCases()),
+                 new MaterialPageRoute(builder: (context) =>Falls()),
                 );
               }
 
