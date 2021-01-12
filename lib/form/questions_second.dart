@@ -2,19 +2,6 @@ import 'package:flutter/material.dart';
 
 String dropdownValue = 'One';
 
-enum Job {
-  Pflegepersonal,
-  Arzt,
-  Psychotherapeut,
-  Apotheker,
-  andere_Berufsgruppe
-}
-Job _job = Job.Pflegepersonal;
-
-enum Frequency { nicht_anwendbar, taeglich, monatlich, jaehrlich, erstmalig }
-Frequency _frequency = Frequency.nicht_anwendbar;
-
-bool _checked = false;
 int minLines = 3;
 int maxLines = 5;
 
