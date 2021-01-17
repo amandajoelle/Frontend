@@ -6,6 +6,7 @@ import 'package:cirs/services/employee-service.dart';
 import 'package:http/http.dart';
 
 class MedicalCaseService extends BaseService {
+  static const routeName = '/Incidents';
   final String medicalCasePath = '/case/';
   final String safeMedicalCasePath = '/medical_case/';
 

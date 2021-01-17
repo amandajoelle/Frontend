@@ -1,5 +1,5 @@
-import 'package:cirs/Fall_1.dart';
-import 'package:cirs/Vorfaelle.dart';
+import 'package:cirs/Cases.dart';
+import 'package:cirs/Incidents.dart';
 import 'package:cirs/drawer/nav-drawer.dart';
 import 'package:cirs/form/form.dart';
 import 'package:cirs/processing-cases.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'drawer/drawer.dart';
-import 'Vorfaelle.dart';
+import 'Incidents.dart';
 
 final String serverUrl = 'http://10.0.2.2:8080';
 
@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) =>  MyHomePage(),
         'login': (context) => Login(),
-        'Vorfaelle':(context) => Vorfaelle(),
-        'Falls':(context) => Falls(),
+        'Incidents':(context) => Incidents(),
+        'Falls':(context) => Cases(null),
         'to_process': (context) => ProcessingCases(),
         'report': (context) => ReportQuestionnaire(),
       },

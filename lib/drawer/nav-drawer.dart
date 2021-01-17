@@ -1,10 +1,10 @@
-import 'package:cirs/Fall_1.dart';
+import 'package:cirs/Cases.dart';
 import 'package:flutter/material.dart';
 import '../login.dart';
 import '../processing-cases.dart';
 import '../main.dart';
-import '../Vorfaelle.dart';
-import '../Fall_1.dart';
+import '../Incidents.dart';
+import '../Cases.dart';
 
 class NavDrawer extends StatelessWidget {
   navigateToPage(BuildContext context, String page) {
@@ -54,14 +54,15 @@ class NavDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.border_color),
-            title: Text('Vorfälle ansehen'),
+            title: Text('Vorfälle ### ansehen'),
             //onTap: () => {Navigator.of(context).pop()},
-              onTap: () {
-                Navigator.push(
-                  context,
-                 new MaterialPageRoute(builder: (context) =>Falls()),
-                );
-              }
+
+                onTap: (){
+                  print("ok");
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Incidents()));
+
+                }
 
           ),
           ListTile(

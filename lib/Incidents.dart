@@ -1,3 +1,4 @@
+import 'package:cirs/Cases.dart';
 import 'package:flutter/material.dart';
 import 'drawer/nav-drawer.dart';
 import 'package:flutter/material.dart';
@@ -6,24 +7,27 @@ import 'package:cirs/main.dart';
 import 'package:cirs/services/medical-case-service.dart';
 import 'package:cirs/services/employee-service.dart';
 
-class Vorfaelle extends StatefulWidget {
+class Incidents extends StatefulWidget {
+  static const routeName = '/Incidents';
   @override
-  State<StatefulWidget> createState() => _VorfaelleState();
+  _IncidentsState createState() => _IncidentsState();
 }
 
 /// This is the stateless widget that the main application instantiates.
-class _VorfaelleState extends State<Vorfaelle> {
+class _IncidentsState extends State<Incidents> {
   static const String _title = 'Fälle';
   MedicalCaseService _medicalCaseService;
   Future<List<MedicalCase>> _cases;
 
-  _VorfaelleState() {
+  _IncidentsState() {
     _medicalCaseService = MedicalCaseService(serverUrl);
-    _cases = _medicalCaseService.getAllIncompleteMedicalCases();
+    _cases = _medicalCaseService.getAllDoneMedicalCases();
   }
 
   @override
   Widget build(BuildContext context) {
+    final Map Incidents = ModalRoute.of(context).settings.arguments;
+
     return MaterialApp(
       title: _title,
       home: Scaffold(
@@ -53,6 +57,7 @@ class _VorfaelleState extends State<Vorfaelle> {
                       ], rows: <DataRow>[
                     for (final item in snapshot.data) DataRow(
                       onSelectChanged: (bool selected) {
+
                         if (selected) {
                           // TODO: navigate to next screen with routing parameters (item.caseId)
                         }
@@ -65,9 +70,13 @@ class _VorfaelleState extends State<Vorfaelle> {
                             )
                         ),
                         DataCell(
-                            Container(
-                                width: 110,
-                                child: Text(item.title == null ? 'Ohne Titel' : item.title)
+                            GestureDetector(
+                              onTap: ()=>Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (BuildContext context) => new Cases(item))),
+                              child: Container(
+                                  width: 110,
+                                  child: Text(item.title == null ? 'Ohne Titel' : item.title)
+                              ),
                             )
                         ),
                       ],
