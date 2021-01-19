@@ -26,7 +26,7 @@ class _IncidentsState extends State<Incidents> {
 
   @override
   Widget build(BuildContext context) {
-    final Map Incidents = ModalRoute.of(context).settings.arguments;
+
 
     return MaterialApp(
       title: _title,
@@ -57,7 +57,6 @@ class _IncidentsState extends State<Incidents> {
                       ], rows: <DataRow>[
                     for (final item in snapshot.data) DataRow(
                       onSelectChanged: (bool selected) {
-
                         if (selected) {
                           // TODO: navigate to next screen with routing parameters (item.caseId)
                         }
@@ -72,8 +71,17 @@ class _IncidentsState extends State<Incidents> {
                         DataCell(
                             GestureDetector(
                               onTap: ()=>Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (BuildContext context) => new Cases(item))),
-                              child: Container(
+                                  builder: (BuildContext context) {
+                                    MedicalCase result;
+                                    _medicalCaseService.getMedicalCase(item.caseId).then((value) => result = value);
+                                    return new Cases(result);
+                                  },
+                                  // settings: new RouteSettings(
+                                  //   name: "name",
+                                  //   arguments: {"arg1", "arg2"},
+                                  // )
+                              )),
+                                  child: Container(
                                   width: 110,
                                   child: Text(item.title == null ? 'Ohne Titel' : item.title)
                               ),

@@ -4,10 +4,12 @@ import 'main.dart';
 
 
 class Cases extends StatelessWidget {
+  static const routeName = '/Cases';
   MedicalCase medicalCase;
   Cases(this.medicalCase);
   @override
   Widget build(BuildContext context) {
+    final MedicalCase args = ModalRoute.of(context).settings.arguments;
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
@@ -15,11 +17,11 @@ class Cases extends StatelessWidget {
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
-                Text(medicalCase.questionnaire),
-                Text(medicalCase.feedback)
+                Text(args.questionnaire),
+                Text(args.feedback)
               ],
             ),
-            title: Text(medicalCase.title),
+            title: Text(args.title),
           ),
           body: TabBarView(
             children:  <Widget> [

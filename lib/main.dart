@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         'home': (context) =>  MyHomePage(),
         'login': (context) => Login(),
         'Incidents':(context) => Incidents(),
-        'Falls':(context) => Cases(null),
+        'Cases':(context) => Cases(null),
         'to_process': (context) => ProcessingCases(),
         'report': (context) => ReportQuestionnaire(),
       },
