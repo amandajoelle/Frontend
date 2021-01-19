@@ -3,22 +3,31 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 
 
-class Cases extends StatelessWidget {
+class Case extends StatefulWidget {
   static const routeName = '/Cases';
+
+  Case();
+
+  @override
+  _CaseState createState() => _CaseState();
+}
+
+class _CaseState extends State<Case> {
   MedicalCase medicalCase;
-  Cases(this.medicalCase);
+
   @override
   Widget build(BuildContext context) {
     final MedicalCase args = ModalRoute.of(context).settings.arguments;
-    return MaterialApp(
-      home: DefaultTabController(
+
+    return Scaffold(
+      body: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
-                Text(args.questionnaire),
-                Text(args.feedback)
+                Text('Fallbeschreibung'),
+                Text('Feedback')
               ],
             ),
             title: Text(args.title),
@@ -26,9 +35,11 @@ class Cases extends StatelessWidget {
           body: TabBarView(
             children:  <Widget> [
             Center(
+              // TODO:Widget with Constructor parameter args.questionnaire
             child: Text('Hier können sie die Beschreibung des Falles einsehen'),
           ),
             Center(
+              // TODO: Widget with Constructor parameter with args.feedback
             child: Text('Hier könnensie das Feedback, zu dem abgeschlossenen Fall sehen'),
           )
             ],

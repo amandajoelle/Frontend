@@ -30,6 +30,9 @@ class _IncidentsState extends State<Incidents> {
 
     return MaterialApp(
       title: _title,
+      routes: {
+        'Case':(context) => Case(),
+      },
       home: Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(title: const Text(_title)),
@@ -59,7 +62,13 @@ class _IncidentsState extends State<Incidents> {
                       onSelectChanged: (bool selected) {
                         if (selected) {
                           // TODO: navigate to next screen with routing parameters (item.caseId)
+                          Navigator.pushNamed(
+                            context,
+                            'Case',
+                            arguments: item
+                          );
                         }
+                        print('Maybe here?');
                       },
                       cells: <DataCell>[
                         DataCell(
@@ -69,8 +78,19 @@ class _IncidentsState extends State<Incidents> {
                             )
                         ),
                         DataCell(
+                          Container(
+                            width: 110,
+                            child: Text(item.title == null ? 'Ohne Titel' : item.title),
+                          )
+                        ),
+                        /* DataCell(
                             GestureDetector(
-                              onTap: ()=>Navigator.of(context).push(new MaterialPageRoute(
+                              onTap: () => Navigator.pushNamed(
+                                  context,
+                                  'Case',
+                                arguments: item
+                              ),
+                              /* onTap: ()=>Navigator.of(context).push(new MaterialPageRoute(
                                   builder: (BuildContext context) {
                                     MedicalCase result;
                                     _medicalCaseService.getMedicalCase(item.caseId).then((value) => result = value);
@@ -80,13 +100,13 @@ class _IncidentsState extends State<Incidents> {
                                   //   name: "name",
                                   //   arguments: {"arg1", "arg2"},
                                   // )
-                              )),
+                              )), */
                                   child: Container(
                                   width: 110,
                                   child: Text(item.title == null ? 'Ohne Titel' : item.title)
                               ),
                             )
-                        ),
+                        ), */
                       ],
                     )
                   ]

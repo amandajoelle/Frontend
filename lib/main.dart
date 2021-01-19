@@ -21,8 +21,8 @@ import 'Incidents.dart';
 final String serverUrl = 'http://10.0.2.2:8080';
 
 void main() {
-  //runApp(MyApp());
-  runApp(MaterialApp(home: MyApp()));
+  runApp(MyApp());
+  // runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         'home': (context) =>  MyHomePage(),
         'login': (context) => Login(),
         'Incidents':(context) => Incidents(),
-        'Cases':(context) => Cases(null),
+        'Case':(context) => Case(),
         'to_process': (context) => ProcessingCases(),
         'report': (context) => ReportQuestionnaire(),
       },
