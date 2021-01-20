@@ -1,4 +1,4 @@
-import 'package:cirs/Cases.dart';
+import 'package:cirs/cases.dart';
 import 'package:flutter/material.dart';
 import 'drawer/nav-drawer.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +28,8 @@ class _IncidentsState extends State<Incidents> {
   Widget build(BuildContext context) {
 
 
-    return MaterialApp(
-      title: _title,
-      routes: {
-        'Case':(context) => Case(),
-      },
-      home: Scaffold(
+    return Scaffold(
+
         drawer: NavDrawer(),
         appBar: AppBar(title: const Text(_title)),
         body: FutureBuilder(
@@ -96,10 +92,7 @@ class _IncidentsState extends State<Incidents> {
                                     _medicalCaseService.getMedicalCase(item.caseId).then((value) => result = value);
                                     return new Cases(result);
                                   },
-                                  // settings: new RouteSettings(
-                                  //   name: "name",
-                                  //   arguments: {"arg1", "arg2"},
-                                  // )
+
                               )), */
                                   child: Container(
                                   width: 110,
@@ -148,7 +141,7 @@ class _IncidentsState extends State<Incidents> {
               );
             }
         ),
-      ),
+
     );
   }
 }

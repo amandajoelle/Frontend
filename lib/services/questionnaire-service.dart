@@ -92,6 +92,7 @@ class Questionnaire {
     String questionnaireString = 'Id: $questionnaireId, expertise: $expertise, ageGroup: $ageGroup,' +
         ' sex: $sex, location: $location, event: $event, result: $result, reasons: $reasons,' +
         ' frequency: $frequency, reporter: $reporter, Factors: ';
+
     for (final elem in factors) {
       questionnaireString += elem.toString();
     }

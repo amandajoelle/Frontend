@@ -1,10 +1,10 @@
-import 'package:cirs/Cases.dart';
+import 'package:cirs/cases.dart';
 import 'package:flutter/material.dart';
 import '../login.dart';
 import '../processing-cases.dart';
 import '../main.dart';
 import '../Incidents.dart';
-import '../Cases.dart';
+import '../cases.dart';
 
 class NavDrawer extends StatelessWidget {
   navigateToPage(BuildContext context, String page) {
