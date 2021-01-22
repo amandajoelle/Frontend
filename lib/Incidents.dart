@@ -1,14 +1,9 @@
-import 'package:cirs/case.dart';
-import 'package:flutter/material.dart';
-import 'drawer/nav-drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:cirs/drawer/drawer.dart';
 import 'package:cirs/main.dart';
 import 'package:cirs/services/medical-case-service.dart';
-import 'package:cirs/services/employee-service.dart';
 
 class Incidents extends StatefulWidget {
-  static const routeName = '/Incidents';
   @override
   _IncidentsState createState() => _IncidentsState();
 }

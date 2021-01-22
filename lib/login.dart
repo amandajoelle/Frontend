@@ -54,18 +54,6 @@ class Login extends StatelessWidget {
                     hintText: 'Geben Sie Ihre zugehöriges Passwort ein'),
               ),
             ),
-            // TODO: remove FlatButton for Forgot Password, because this function is not desired
-            /*
-            FlatButton(
-              onPressed: (){
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
-              },
-              child: Text(
-                'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
-              ),
-            ),
-            */
             SizedBox(height: 30.0,),
             Container(
               height: 50,

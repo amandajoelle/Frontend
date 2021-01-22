@@ -1,8 +1,14 @@
+import 'package:cirs/main.dart';
+import 'package:cirs/services/factor-service.dart';
+import 'package:cirs/services/questionnaire-service.dart';
 import 'package:flutter/material.dart';
 
-String dropdownValue = 'One';
+String _expertiseDropDownValue = 'Allgemeinmedizin';
+String _ageDropDownValue = '0-1';
+String _locationDropDownValue = 'Krankenhaus';
 
 enum Gender { maennlich, weiblich, unbekannt }
+
 Gender _gender = Gender.maennlich;
 
 enum Job {
@@ -12,14 +18,46 @@ enum Job {
   Apotheker,
   andere_Berufsgruppe
 }
+
 Job _job = Job.Pflegepersonal;
 
 enum Frequency { nicht_anwendbar, taeglich, monatlich, jaehrlich, erstmalig }
+
 Frequency _frequency = Frequency.nicht_anwendbar;
 
-bool _checked = false;
+// bool _checked = false;
+List<bool> _factorCheck = [
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false
+];
+
+List<String> _factors = [
+  'Kommunikation (im Team, mit Patienten, mit anderen Ärzten etc.)',
+  'Ausbildung und Training',
+  'Persönliche Faktoren des Mitarbeiters (Müdigkeit, Gesundheit, Motivation etc.)',
+  'Teamfaktoren (Zusammenarbeit, Vertrauen, Kultur, Führung etc.)',
+  'Organisation (zu wenig Personal, Standards, Arbeitsbelastung, Abläufe etc.)',
+  'Patientenfaktoren (Sprache, Einschränkungen, med. Zustand etc.)',
+  'Technische Geräte (Funktionsfähigkeit, Bedienbarkeit etc.)',
+  'Kontext der Institution (Organisation des Gesundheitswesens etc.)',
+  'Medikation (Medikamente beteiligt?)',
+  'sonstiges'
+];
+
 int minLines = 3;
 int maxLines = 5;
+
+final _eventController = TextEditingController();
+final _resultController = TextEditingController();
+final _reasonsController = TextEditingController();
 
 // Define a custom Form widget.
 class Questions_First extends StatefulWidget {
@@ -73,7 +111,7 @@ class Questions_FirstState extends State<Questions_First> {
         content: Column(
           children: <Widget>[
             DropdownButton<String>(
-              value: dropdownValue,
+              value: _expertiseDropDownValue,
               icon: Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
@@ -83,12 +121,29 @@ class Questions_FirstState extends State<Questions_First> {
                 color: Colors.deepPurpleAccent,
               ),
               onChanged: (String newValue) {
-                /*setState(() {
-                dropdownValue = newValue;
-              });*/
+                setState(() {
+                _expertiseDropDownValue = newValue;
+              });
               },
-              items: <String>['One', 'Two', 'Free', 'Four']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                'Allgemeinmedizin',
+                'Anästhesiologie',
+                'Augenheilkunde',
+                'Chirurgie',
+                'Frauenheilkunde / Geburtshilfe',
+                'Geriatrie',
+                'Haut- und Geschlechtskrankheiten',
+                'HNO-Heilkunde',
+                'Innere Medizin',
+                'Kinder- und Jugendmedizin',
+                'Neurologie',
+                'Orthopädie',
+                'Pharmazie',
+                'Psychiatrie',
+                'Psychotherapie',
+                'Radiologie',
+                'Urologie'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -110,7 +165,7 @@ class Questions_FirstState extends State<Questions_First> {
         content: Column(
           children: <Widget>[
             DropdownButton<String>(
-              value: dropdownValue,
+              value: _ageDropDownValue,
               icon: Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
@@ -120,12 +175,26 @@ class Questions_FirstState extends State<Questions_First> {
                 color: Colors.deepPurpleAccent,
               ),
               onChanged: (String newValue) {
-                /*setState(() {
-                dropdownValue = newValue;
-              });*/
+                setState(() {
+                _ageDropDownValue = newValue;
+              });
               },
-              items: <String>['One', 'Two', 'Free', 'Four']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                '0-1',
+                '2-5',
+                '6-10',
+                '11-15',
+                '16-20',
+                '21-30',
+                '31-40',
+                '41-50',
+                '51-60',
+                '61-70',
+                '71-80',
+                '81-90',
+                '>90',
+                'unbekannt'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -151,11 +220,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Gender.maennlich,
                 groupValue: _gender,
-                /*onChanged: (Gender value) {
+                onChanged: (Gender value) {
                 setState(() {
                 _gender = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -163,11 +232,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Gender.weiblich,
                 groupValue: _gender,
-                /*onChanged: (Gender value) {
+                onChanged: (Gender value) {
                 setState(() {
                 _gender = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -175,11 +244,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Gender.unbekannt,
                 groupValue: _gender,
-                /*onChanged: (Gender value) {
+                onChanged: (Gender value) {
                 setState(() {
                 _gender = value;
                 });
-              }*/
+              }
               ),
             ),
           ],
@@ -196,7 +265,7 @@ class Questions_FirstState extends State<Questions_First> {
         content: Column(
           children: <Widget>[
             DropdownButton<String>(
-              value: dropdownValue,
+              value: _locationDropDownValue,
               icon: Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
@@ -206,11 +275,18 @@ class Questions_FirstState extends State<Questions_First> {
                 color: Colors.deepPurpleAccent,
               ),
               onChanged: (String newValue) {
-                /*setState(() {
-                dropdownValue = newValue;
-              });*/
+                setState(() {
+                _locationDropDownValue = newValue;
+              });
               },
-              items: <String>['One', 'Two', 'Free', 'Four']
+              items: <String>[
+                'Krankenhaus',
+                'Praxis',
+                'Notfalldienst / Rettungswesen',
+                'Hausbesuch',
+                'Pflege / Altenheim',
+                'Apotheke'
+              ]
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -231,7 +307,11 @@ class Questions_FirstState extends State<Questions_First> {
                 : _listState[0],
         content: Column(
           children: <Widget>[
-            TextField(minLines: minLines, maxLines: maxLines),
+            TextField(
+                controller: _eventController,
+                minLines: minLines, 
+                maxLines: maxLines
+            ),
           ],
         ),
       ),
@@ -245,7 +325,11 @@ class Questions_FirstState extends State<Questions_First> {
                 : _listState[0],
         content: Column(
           children: <Widget>[
-            TextField(minLines: minLines, maxLines: maxLines),
+            TextField(
+                controller: _resultController,
+                minLines: minLines,
+                maxLines: maxLines
+            ),
           ],
         ),
       ),
@@ -260,7 +344,11 @@ class Questions_FirstState extends State<Questions_First> {
                 : _listState[0],
         content: Column(
           children: <Widget>[
-            TextField(minLines: minLines, maxLines: maxLines),
+            TextField(
+                controller: _reasonsController,
+                minLines: minLines,
+                maxLines: maxLines
+            ),
           ],
         ),
       ),
@@ -278,99 +366,99 @@ class Questions_FirstState extends State<Questions_First> {
             CheckboxListTile(
               title: const Text(
                   "Kommunikation (im Team, mit Patienten, mit anderen Ärzten etc.)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[0],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[0] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text("Ausbildung und Training"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[1],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[1] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text(
                   "Persönliche Faktoren des Mitarbeiters (Müdigkeit, Gesundheit, Motivation etc.)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[2],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[2] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text(
                   "Teamfaktoren (Zusammenarbeit, Vertrauen, Kultur, Führung etc.)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[3],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[3] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text(
                   "Organisation (zu wenig Personal, Standards, Arbeitsbelastung, Abläufe etc.)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[4],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[4] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text(
                   "Patientenfaktoren (Sprache, Einschränkungen, med. Zustand etc.)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[5],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[5] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text(
                   "Technische Geräte (Funktionsfähigkeit, Bedienbarkeit etc.)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[6],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[6] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text(
                   "Kontext der Institution (Organisation des Gesundheitswesens etc.)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[7],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[7] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text("Medikation (Medikamente beteiligt?)"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[8],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[8] = value;
                 });
-              }*/
+              }
             ),
             CheckboxListTile(
               title: const Text("sonstiges:"),
-              value: _checked,
-              /*onChanged: (bool value) {
+              value: _factorCheck[9],
+              onChanged: (bool value) {
                 setState(() {
-                _checked = value;
+                _factorCheck[9] = value;
                 });
-              }*/
+              }
             ),
           ],
         ),
@@ -390,11 +478,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Frequency.nicht_anwendbar,
                 groupValue: _frequency,
-                /*onChanged: (Gender value) {
+                onChanged: (Frequency value) {
                 setState(() {
-                _gender = value;
+                _frequency = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -402,11 +490,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Frequency.taeglich,
                 groupValue: _frequency,
-                /*onChanged: (Gender value) {
+                onChanged: (Frequency value) {
                 setState(() {
-                _gender = value;
+                _frequency = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -414,11 +502,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Frequency.monatlich,
                 groupValue: _frequency,
-                /*onChanged: (Gender value) {
+                onChanged: (Frequency value) {
                 setState(() {
-                _gender = value;
+                _frequency = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -426,11 +514,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Frequency.jaehrlich,
                 groupValue: _frequency,
-                /*onChanged: (Gender value) {
+                onChanged: (Frequency value) {
                 setState(() {
-                _gender = value;
+                _frequency = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -438,11 +526,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Frequency.erstmalig,
                 groupValue: _frequency,
-                /*onChanged: (Gender value) {
+                onChanged: (Frequency value) {
                 setState(() {
-                _gender = value;
+                _frequency = value;
                 });
-              }*/
+              }
               ),
             ),
           ],
@@ -464,11 +552,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Job.Pflegepersonal,
                 groupValue: _job,
-                /*onChanged: (Gender value) {
+                onChanged: (Job value) {
                 setState(() {
-                _gender = value;
+                _job = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -476,11 +564,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Job.Arzt,
                 groupValue: _job,
-                /*onChanged: (Gender value) {
+                onChanged: (Job value) {
                 setState(() {
-                _gender = value;
+                _job = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -488,11 +576,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Job.Apotheker,
                 groupValue: _job,
-                /*onChanged: (Gender value) {
+                onChanged: (Job value) {
                 setState(() {
-                _gender = value;
+                _job = value;
                 });
-              }*/
+              }
               ),
             ),
             ListTile(
@@ -500,11 +588,11 @@ class Questions_FirstState extends State<Questions_First> {
               leading: Radio(
                 value: Job.andere_Berufsgruppe,
                 groupValue: _job,
-                /*onChanged: (Gender value) {
+                onChanged: (Job value) {
                 setState(() {
-                _gender = value;
+                _job = value;
                 });
-              }*/
+              }
               ),
             ),
           ],
@@ -573,7 +661,49 @@ class Questions_FirstState extends State<Questions_First> {
           ),
           FlatButton(
             color: Colors.blue,
-            onPressed: () {},
+            onPressed: () async {
+              QuestionnaireService questionnaireService = QuestionnaireService(serverUrl);
+              List<Factor> factors = [];
+              for (int i = 0; i < _factorCheck.length; i++) {
+                if (_factorCheck[i]) {
+                  factors.add(Factor(
+                    content: _factors[i]
+                  ));
+                }
+              }
+              Questionnaire questionnaire = Questionnaire(
+                expertise: _expertiseDropDownValue,
+                ageGroup: _ageDropDownValue,
+                sex: _gender.toString(),
+                location: _locationDropDownValue,
+                event: _eventController.text,
+                result: _resultController.text,
+                reasons: _reasonsController.text,
+                frequency: _frequency.toString(),
+                reporter: _job.toString(),
+                factors: factors
+              );
+              bool response = await questionnaireService.postQuestionnaire(questionnaire);
+              final snackBar = response ?
+              SnackBar(
+                  duration: Duration(days: 1),
+                  action: SnackBarAction(
+                    label: 'OK',
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      Navigator.popAndPushNamed(context, 'Incidents');
+                    },
+                  ),
+                  content: Text('Ereignis erfolgreich gemeldet', textAlign: TextAlign.center)
+              ) :
+              SnackBar(
+                  content: Text('Ein Fehler ist aufgetreten. Ereignis wurde nicht gemeldet!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                  )
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
             child: Text(
               'Abschicken',
               style: TextStyle(color: Colors.white),

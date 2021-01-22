@@ -1,14 +1,9 @@
 import 'package:cirs/feedback-view.dart';
 import 'package:cirs/questionnaire-view.dart';
 import 'package:cirs/services/medical-case-service.dart';
-import 'package:cirs/services/questionnaire-service.dart';
-import 'package:string_splitter/string_splitter.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
 
 class Case extends StatefulWidget {
-  static const routeName = '/Cases';
-
   Case();
 
   @override
