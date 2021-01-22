@@ -51,7 +51,6 @@ class _IncidentsState extends State<Incidents> {
                     for (final item in snapshot.data) DataRow(
                       onSelectChanged: (bool selected) {
                         if (selected) {
-                          // TODO: navigate to next screen with routing parameters (item.caseId)
                           Navigator.pushNamed(
                             context,
                             'Case',
@@ -72,27 +71,6 @@ class _IncidentsState extends State<Incidents> {
                             child: Text(item.title == null ? 'Ohne Titel' : item.title),
                           )
                         ),
-                        /* DataCell(
-                            GestureDetector(
-                              onTap: () => Navigator.pushNamed(
-                                  context,
-                                  'Case',
-                                arguments: item
-                              ),
-                              /* onTap: ()=>Navigator.of(context).push(new MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    MedicalCase result;
-                                    _medicalCaseService.getMedicalCase(item.caseId).then((value) => result = value);
-                                    return new Cases(result);
-                                  },
-
-                              )), */
-                                  child: Container(
-                                  width: 110,
-                                  child: Text(item.title == null ? 'Ohne Titel' : item.title)
-                              ),
-                            )
-                        ), */
                       ],
                     )
                   ]
@@ -126,10 +104,12 @@ class _IncidentsState extends State<Incidents> {
                 ];
               }
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: children,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: children,
+                  ),
                 ),
               );
             }

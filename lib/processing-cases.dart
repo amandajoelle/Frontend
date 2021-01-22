@@ -23,9 +23,7 @@ class _ProcessingCasesState extends State<ProcessingCases> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
+    return Scaffold(
         drawer: MyDrawer(),
         appBar: AppBar(title: const Text(_title)),
         body: FutureBuilder(
@@ -59,7 +57,10 @@ class _ProcessingCasesState extends State<ProcessingCases> {
                     for (final item in snapshot.data) DataRow(
                       onSelectChanged: (bool selected) {
                         if (selected) {
-                          // TODO: navigate to next screen with routing parameters (item.caseId)
+                          Navigator.pushNamed(
+                              context,
+                              'edit_case'
+                          );
                         }
                       },
                       cells: <DataCell>[
@@ -109,15 +110,16 @@ class _ProcessingCasesState extends State<ProcessingCases> {
                 ];
               }
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: children,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: children,
+                  ),
                 ),
               );
             }
         ),
-      ),
-    );
+      );
   }
 }

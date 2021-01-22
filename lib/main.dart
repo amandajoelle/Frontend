@@ -1,5 +1,6 @@
 import 'package:cirs/case.dart';
 import 'package:cirs/Incidents.dart';
+import 'package:cirs/edit-case.dart';
 import 'package:cirs/form/form.dart';
 import 'package:cirs/processing-cases.dart';
 import 'package:cirs/login.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         'Case':(context) => Case(),
         'to_process': (context) => ProcessingCases(),
         'report': (context) => ReportQuestionnaire(),
+        'edit_case': (context) => EditCase(),
       },
       initialRoute: 'home',
       home: MyHomePage(),
