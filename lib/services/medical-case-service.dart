@@ -6,17 +6,19 @@ import 'package:cirs/services/employee-service.dart';
 import 'package:http/http.dart';
 
 class MedicalCaseService extends BaseService {
-  static const routeName = '/Incidents';
+  /// Additional route to the medical cases, which doesn't need a token
   final String medicalCasePath = '/case/';
+  /// Additional route to the medical cases, which needs a token
   final String safeMedicalCasePath = '/medical_case/';
 
-  MedicalCaseService(String url): super(rootUrl: url);
+  MedicalCaseService(String url): super(url);
 
+  /// Fetches a [MedicalCase] by its id [medicalCaseId].
   Future<MedicalCase> getMedicalCase(String medicalCaseId) async {
     MedicalCase medicalCase;
     try {
       Response response = await get(
-          getRootUrl() + medicalCasePath + medicalCaseId,
+          rootUrl + medicalCasePath + medicalCaseId,
           headers: {'Accept':'application/json'});
       Map data = jsonDecode(response.body);
       medicalCase = MedicalCase.fromJson(data);
@@ -27,11 +29,12 @@ class MedicalCaseService extends BaseService {
     return medicalCase;
   }
 
+  /// Fetches all medical cases with the status 'erledigt'.
   Future<List<MedicalCase>> getAllDoneMedicalCases() async {
     List<MedicalCase> medicalCases;
     try {
       Response response = await get(
-          getRootUrl() + medicalCasePath + 'done/',
+          rootUrl + medicalCasePath + 'done/',
           headers: {'Accept':'application/json'});
       medicalCases = MedicalCase.convertDynamicToMedicalCase(jsonDecode(response.body));
     } catch(error) {
@@ -41,12 +44,14 @@ class MedicalCaseService extends BaseService {
     return medicalCases;
   }
 
+  /// Fetches all medical cases with the status 'unbearbeitet' and the id
+  /// of the currently logged in employee.
   Future<List<MedicalCase>> getAllIncompleteMedicalCases() async {
     String token = TokenStorage().getToken();
     List<MedicalCase> medicalCases;
     try {
       Response response = await get(
-          getRootUrl() + safeMedicalCasePath + 'incomplete/',
+          rootUrl + safeMedicalCasePath + 'incomplete/',
           headers: {
             'Accept':'application/json',
             'Authorization':'Bearer $token'
@@ -59,12 +64,16 @@ class MedicalCaseService extends BaseService {
     return medicalCases;
   }
 
+  /// Updates a [MedicalCase] with an altered [medicalCase] object, and specifies
+  /// his id [medicalCaseId].
+  ///
+  /// Returns a [List] with the number of altered objects.
   Future<List<int>> updateMedicalCase(String medicalCaseId, MedicalCase medicalCase) async {
     String token = TokenStorage().getToken();
     List<int> updateResponse;
     try {
       Response response = await put(
-          getRootUrl() + safeMedicalCasePath + medicalCaseId,
+          rootUrl + safeMedicalCasePath + medicalCaseId,
           headers: {
             'Accept':'application/json',
             'Content-Type':'application/json',
@@ -94,6 +103,8 @@ class MedicalCase {
   MedicalCase({this.caseId, this.title, this.status, this.feedback,
     this.questionnaire, this.classification, this.editor, this.employee});
 
+  /// A factory method to convert a receiving Map, from the backend.,
+  /// to a [MedicalCase] object.
   factory MedicalCase.fromJson(Map<String, dynamic> json) {
     return MedicalCase(
       caseId: json['case_id'],
@@ -107,6 +118,7 @@ class MedicalCase {
     );
   }
 
+  /// Converts the current [MedicalCase] object into a Json object.
   Map<String, dynamic> toJson() {
     return {
       'title': title,
@@ -118,6 +130,7 @@ class MedicalCase {
     };
   }
 
+  /// Coverts the backend medicalCase [response] to a [List] of MedicalCases.
   static List<MedicalCase> convertDynamicToMedicalCase(List<dynamic> response) {
     List<MedicalCase> medicalCases = [];
     for(final elem in response) {
