@@ -76,7 +76,7 @@ class Login extends StatelessWidget {
                       );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   if (result)
-                    Navigator.popAndPushNamed(context, 'home');
+                    Navigator.popAndPushNamed(context, 'to_process');
                   else {
                     emailController.clear();
                     passwordController.clear();

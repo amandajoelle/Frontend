@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         'report': (context) => ReportQuestionnaire(),
         'edit_case': (context) => EditCase(),
       },
-      initialRoute: 'home',
+      initialRoute: 'Incidents',
       home: MyHomePage(),
     );
   }

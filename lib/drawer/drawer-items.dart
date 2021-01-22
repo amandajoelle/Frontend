@@ -1,5 +1,4 @@
 import 'package:cirs/drawer/basic-items.dart';
-import 'package:cirs/main.dart';
 import 'package:cirs/processing-cases.dart';
 import 'package:cirs/services/token-storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +6,14 @@ import 'package:flutter/material.dart';
 
 import 'package:cirs/login.dart';
 
-class DrawerItems extends StatelessWidget {
+import '../Incidents.dart';
+
+class DrawerItems extends StatefulWidget {
+  @override
+  _DrawerItemsState createState() => _DrawerItemsState();
+}
+
+class _DrawerItemsState extends State<DrawerItems> {
   Stream _authState$ = TokenStorage().stream$;
 
   @override
@@ -36,7 +42,7 @@ class DrawerItems extends StatelessWidget {
                   TokenStorage().setToken(null);
                   Navigator.push(
                     context,
-                    new MaterialPageRoute(builder: (context) => MyHomePage())
+                    new MaterialPageRoute(builder: (context) => Incidents())
                   );
                 }
               ),
@@ -61,5 +67,4 @@ class DrawerItems extends StatelessWidget {
       },
     );
   }
-
 }
