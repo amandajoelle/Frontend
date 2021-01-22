@@ -28,6 +28,7 @@ dependencies:
   intl: ">=0.16.0<=0.17.0-nullsafety.2"
   http: ^0.12.2
   rxdart: ^0.25.0
+  string_splitter: ^0.1.0+5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

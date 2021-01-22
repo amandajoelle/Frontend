@@ -1,3 +1,4 @@
+import 'package:cirs/Incidents.dart';
 import 'package:cirs/form/form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,10 @@ class BasicItems extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.settings),
           title: Text('Vorfälle ansehen'),
+           onTap: () {
+             Navigator.push(context,
+                 MaterialPageRoute(builder: (context) => Incidents()));
+           }
         ),
         ListTile(
           leading: Icon(Icons.info_rounded),

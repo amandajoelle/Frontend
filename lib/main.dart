@@ -1,3 +1,5 @@
+import 'package:cirs/case.dart';
+import 'package:cirs/Incidents.dart';
 import 'package:cirs/drawer/nav-drawer.dart';
 import 'package:cirs/form/form.dart';
 import 'package:cirs/processing-cases.dart';
@@ -14,12 +16,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'drawer/drawer.dart';
+import 'Incidents.dart';
 
 final String serverUrl = 'http://10.0.2.2:8080';
 
 void main() {
-  //runApp(MyApp());
-  runApp(MaterialApp(home: MyApp()));
+  runApp(MyApp());
+  // runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -34,6 +37,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) =>  MyHomePage(),
         'login': (context) => Login(),
+        'Incidents':(context) => Incidents(),
+        'Case':(context) => Case(),
         'to_process': (context) => ProcessingCases(),
         'report': (context) => ReportQuestionnaire(),
       },
