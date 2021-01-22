@@ -1,11 +1,11 @@
-import 'package:cirs/cases.dart';
+import 'package:cirs/case.dart';
 import 'package:flutter/material.dart';
 import '../login.dart';
 import '../processing-cases.dart';
 import '../main.dart';
 import '../Incidents.dart';
-import '../cases.dart';
-
+import '../case.dart';
+/*
 class NavDrawer extends StatelessWidget {
   navigateToPage(BuildContext context, String page) {
     Navigator.of(context).pushNamedAndRemoveUntil(page, (Route<dynamic> route) => false);
@@ -80,3 +80,4 @@ class NavDrawer extends StatelessWidget {
     );
   }
 }
+*/

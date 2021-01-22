@@ -1,4 +1,4 @@
-import 'package:cirs/cases.dart';
+import 'package:cirs/case.dart';
 import 'package:flutter/material.dart';
 import 'drawer/nav-drawer.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +29,7 @@ class _IncidentsState extends State<Incidents> {
 
 
     return Scaffold(
-
-        drawer: NavDrawer(),
+        drawer: MyDrawer(),
         appBar: AppBar(title: const Text(_title)),
         body: FutureBuilder(
             future: _cases,
@@ -64,7 +63,6 @@ class _IncidentsState extends State<Incidents> {
                             arguments: item
                           );
                         }
-                        print('Maybe here?');
                       },
                       cells: <DataCell>[
                         DataCell(

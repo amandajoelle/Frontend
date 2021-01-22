@@ -1,4 +1,4 @@
-import 'package:cirs/cases.dart';
+import 'package:cirs/case.dart';
 import 'package:cirs/Incidents.dart';
 import 'package:cirs/drawer/nav-drawer.dart';
 import 'package:cirs/form/form.dart';
