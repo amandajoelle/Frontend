@@ -44,8 +44,26 @@ Die App kann ebenfalls auf einem Android Smartphone ausgeführt werden. Hierfür
 final String serverUrl = 'http://10.0.2.2:8080';
 
 void main() {
-  runApp(MaterialApp(home: MyApp()));
+  runApp(MyApp());
 }
 ...
 \end{lstlisting}
 Ersetzen Sie die IP Adresse in der Konstanten \textit{serverUrl}, aus dem Listing \ref{lst:url_ersetzen}, für die Ihres Computers auf dem die Backend Server Software ausgeführt wird. Sowohl \textit{http://} als auch \textit{:8080} müssen Bestandteil der URL bleiben.
+
+\section{Workflow}
+\label{workflow}
+Für die Benutzung der wurde ein basischer Workflow erarbeitet, der Meldung eines Vorfalles beschreibt. In der Abbildung \ref{fig:work} wird dieser Workflow dargestellt.
+\begin{figure}[hbt!]
+\includegraphics[width=16cm]{CIRS_Workflow.pdf}
+\caption{Grundlegender Workflow zum melden eines Vorfalls in der CIRS APP}
+\label{fig:work}
+\end{figure}
+
+\section{Datenbank}
+\label{datenbank}
+Für die Sicherung der Daten wurde eine relationale Datenbank verwendet. Im Rahmen des Projektes wurde dies mit SQLite erstellt. Diese kann später, ohne Änderungen im Programmcode, durch eine andere relationale Datenbank ersetzt werden. In der Abbilding \ref{fig:cirs_data} wird das Entity-Relationship-Modell, für die erstellte Datenbank, abgebildet.
+\begin{figure}[hbt!]
+\includegraphics[width=16cm]{ERM-CIRS.pdf}
+\caption{Entity-Relationship-Modell für die CIRS Datenbank}
+\label{fig:cirs_data}
+\end{figure}
